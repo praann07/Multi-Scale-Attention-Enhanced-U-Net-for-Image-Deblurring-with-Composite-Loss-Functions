@@ -1,0 +1,280 @@
+### Model Architecture Summary ###
+Model has 29841624 parameters.
+MultiScaleAttnUNet(
+  (enc1): Sequential(
+    (0): DoubleConv(
+      (block): Sequential(
+        (0): Conv2d(3, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(96, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (4): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): ReLU(inplace=True)
+      )
+    )
+    (1): CBAMBlock(
+      (ca): ChannelAttention(
+        (avg_pool): AdaptiveAvgPool2d(output_size=1)
+        (max_pool): AdaptiveMaxPool2d(output_size=1)
+        (fc1): Conv2d(96, 6, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (relu): ReLU()
+        (fc2): Conv2d(6, 96, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (sigmoid): Sigmoid()
+      )
+      (sa): SpatialAttention(
+        (conv): Conv2d(2, 1, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), bias=False)
+        (sigmoid): Sigmoid()
+      )
+    )
+  )
+  (enc2): Sequential(
+    (0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (1): DoubleConv(
+      (block): Sequential(
+        (0): Conv2d(96, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(192, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (4): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): ReLU(inplace=True)
+      )
+    )
+    (2): CBAMBlock(
+      (ca): ChannelAttention(
+        (avg_pool): AdaptiveAvgPool2d(output_size=1)
+        (max_pool): AdaptiveMaxPool2d(output_size=1)
+        (fc1): Conv2d(192, 12, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (relu): ReLU()
+        (fc2): Conv2d(12, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (sigmoid): Sigmoid()
+      )
+      (sa): SpatialAttention(
+        (conv): Conv2d(2, 1, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), bias=False)
+        (sigmoid): Sigmoid()
+      )
+    )
+  )
+  (enc3): Sequential(
+    (0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (1): DoubleConv(
+      (block): Sequential(
+        (0): Conv2d(192, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(384, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (4): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): ReLU(inplace=True)
+      )
+    )
+    (2): CBAMBlock(
+      (ca): ChannelAttention(
+        (avg_pool): AdaptiveAvgPool2d(output_size=1)
+        (max_pool): AdaptiveMaxPool2d(output_size=1)
+        (fc1): Conv2d(384, 24, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (relu): ReLU()
+        (fc2): Conv2d(24, 384, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (sigmoid): Sigmoid()
+      )
+      (sa): SpatialAttention(
+        (conv): Conv2d(2, 1, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), bias=False)
+        (sigmoid): Sigmoid()
+      )
+    )
+  )
+  (enc4): Sequential(
+    (0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (1): DoubleConv(
+      (block): Sequential(
+        (0): Conv2d(384, 768, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(768, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(768, 768, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (4): BatchNorm2d(768, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): ReLU(inplace=True)
+      )
+    )
+    (2): CBAMBlock(
+      (ca): ChannelAttention(
+        (avg_pool): AdaptiveAvgPool2d(output_size=1)
+        (max_pool): AdaptiveMaxPool2d(output_size=1)
+        (fc1): Conv2d(768, 48, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (relu): ReLU()
+        (fc2): Conv2d(48, 768, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (sigmoid): Sigmoid()
+      )
+      (sa): SpatialAttention(
+        (conv): Conv2d(2, 1, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), bias=False)
+        (sigmoid): Sigmoid()
+      )
+    )
+  )
+  (bottleneck): DoubleConv(
+    (block): Sequential(
+      (0): Conv2d(768, 768, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+      (1): BatchNorm2d(768, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU(inplace=True)
+      (3): Conv2d(768, 768, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+      (4): BatchNorm2d(768, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (5): ReLU(inplace=True)
+    )
+  )
+  (self_attn): SelfAttnBlock(
+    (query): Conv2d(768, 768, kernel_size=(1, 1), stride=(1, 1))
+    (key): Conv2d(768, 768, kernel_size=(1, 1), stride=(1, 1))
+    (value): Conv2d(768, 768, kernel_size=(1, 1), stride=(1, 1))
+    (softmax): Softmax(dim=-1)
+  )
+  (up3): ConvTranspose2d(768, 384, kernel_size=(2, 2), stride=(2, 2))
+  (dec3): Sequential(
+    (0): DoubleConv(
+      (block): Sequential(
+        (0): Conv2d(768, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(384, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (4): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): ReLU(inplace=True)
+      )
+    )
+    (1): CBAMBlock(
+      (ca): ChannelAttention(
+        (avg_pool): AdaptiveAvgPool2d(output_size=1)
+        (max_pool): AdaptiveMaxPool2d(output_size=1)
+        (fc1): Conv2d(384, 24, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (relu): ReLU()
+        (fc2): Conv2d(24, 384, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (sigmoid): Sigmoid()
+      )
+      (sa): SpatialAttention(
+        (conv): Conv2d(2, 1, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), bias=False)
+        (sigmoid): Sigmoid()
+      )
+    )
+  )
+  (up2): ConvTranspose2d(384, 192, kernel_size=(2, 2), stride=(2, 2))
+  (dec2): Sequential(
+    (0): DoubleConv(
+      (block): Sequential(
+        (0): Conv2d(384, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(192, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (4): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): ReLU(inplace=True)
+      )
+    )
+    (1): CBAMBlock(
+      (ca): ChannelAttention(
+        (avg_pool): AdaptiveAvgPool2d(output_size=1)
+        (max_pool): AdaptiveMaxPool2d(output_size=1)
+        (fc1): Conv2d(192, 12, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (relu): ReLU()
+        (fc2): Conv2d(12, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (sigmoid): Sigmoid()
+      )
+      (sa): SpatialAttention(
+        (conv): Conv2d(2, 1, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), bias=False)
+        (sigmoid): Sigmoid()
+      )
+    )
+  )
+  (up1): ConvTranspose2d(192, 96, kernel_size=(2, 2), stride=(2, 2))
+  (dec1): Sequential(
+    (0): DoubleConv(
+      (block): Sequential(
+        (0): Conv2d(192, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(96, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (4): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): ReLU(inplace=True)
+      )
+    )
+    (1): CBAMBlock(
+      (ca): ChannelAttention(
+        (avg_pool): AdaptiveAvgPool2d(output_size=1)
+        (max_pool): AdaptiveMaxPool2d(output_size=1)
+        (fc1): Conv2d(96, 6, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (relu): ReLU()
+        (fc2): Conv2d(6, 96, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (sigmoid): Sigmoid()
+      )
+      (sa): SpatialAttention(
+        (conv): Conv2d(2, 1, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), bias=False)
+        (sigmoid): Sigmoid()
+      )
+    )
+  )
+  (out_final): Conv2d(96, 3, kernel_size=(1, 1), stride=(1, 1))
+  (out_half): Conv2d(192, 3, kernel_size=(1, 1), stride=(1, 1))
+  (out_qter): Conv2d(384, 3, kernel_size=(1, 1), stride=(1, 1))
+)
+
+### Final Evaluation Metrics ###
+Average PSNR: 28.0973 dB
+Average SSIM: 0.815090
+PSNR: Mean = 28.0973, Std = 4.3706
+SSIM: Mean = 0.815090, Std = 0.142552
+
+### Training and Validation Loss per Epoch ###
+Epoch,TrainingLoss,ValidationLoss
+1,1.492906,0.975414
+2,0.952072,0.822676
+3,0.860533,0.763496
+4,0.830149,0.720922
+5,0.807358,0.710262
+6,0.808219,0.709615
+7,0.793232,0.713913
+8,0.776625,0.752729
+9,0.766970,0.707587
+10,0.756776,0.717473
+11,0.751633,0.688934
+12,0.740498,0.658648
+13,0.729942,0.691209
+14,0.722751,0.682708
+15,0.716475,0.670725
+16,0.709789,0.662236
+17,0.703845,0.647403
+18,0.700186,0.653297
+19,0.693525,0.652477
+20,0.685698,0.638679
+21,0.683376,0.656888
+22,0.674396,0.665331
+23,0.672393,0.642842
+24,0.666316,0.703226
+25,0.660417,0.632554
+26,0.660726,0.614463
+27,0.649901,0.642295
+28,0.644926,0.697839
+29,0.640969,0.612686
+30,0.637456,0.618152
+31,0.636755,0.606842
+32,0.622743,0.602451
+33,0.618958,0.606426
+34,0.614463,0.618700
+35,0.607926,0.618520
+36,0.602304,0.599379
+37,0.596346,0.619578
+38,0.592402,0.638828
+39,0.586777,0.628316
+40,0.581485,0.593928
+41,0.576534,0.600103
+42,0.572482,0.616739
+43,0.567211,0.623130
+44,0.561588,0.592504
+45,0.556956,0.609812
+46,0.552774,0.769367
+47,0.548711,0.591961
+48,0.544879,0.595705
+49,0.542975,0.605464
+50,0.539948,0.609501
+51,0.536614,0.603894
+52,0.534077,0.612637
+53,0.531797,0.651407
+54,0.530588,0.613679
+55,0.528866,0.611857
+56,0.529049,0.627522
+57,0.526542,0.633376
+58,0.526208,0.634693
+59,0.525430,0.620098
+60,0.525770,0.625872
